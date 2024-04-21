@@ -61,7 +61,8 @@
                   question: $("#question").val()
               },
               success: function(result) {
-                $("#response").append("<br>Me: "+$("#question").val()+ "<br> response: "+result.response);
+				$("#response").html("");
+                $("#response").append("Response: "+result.response);
                 $("#question").val("")
               },
               error: function(result) {

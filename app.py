@@ -2,7 +2,7 @@ from langchain.vectorstores import Chroma
 from src.helper import load_embedding
 from dotenv import load_dotenv
 import os
-from src.helper import extract_text
+from src.helper import extract_text, validate_url
 from flask import Flask, render_template, jsonify, request
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationSummaryMemory
@@ -37,8 +37,9 @@ def index():
 def user_input():
     if request.method == 'POST':
         user_input = request.form['question']
-        extract_text(user_input)
-        os.system("python store_index.py")
+        if validate_url(user_input):
+            extract_text(user_input)
+            os.system("python store_index.py")
 
     return jsonify({"response": str(user_input)})
 
