@@ -1,6 +1,6 @@
 # Cource-code-analysis-using-GenAIClone the repository
 
-Project repo: https://github.com/santoshbt/Source-code-analysis-using-GenAI
+Project repo: https://github.com/santoshbt/ChatBot
 
 ## STEP 01- Create a conda environment after opening the repository
 
