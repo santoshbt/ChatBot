@@ -51,11 +51,13 @@ def chat():
     print(input)
 
     if input == "clear":
-        os.system("rmdir /s repo")
-
-    result = qa(input)
-    print(result['answer'])
-    return str(result["answer"])
+        with open('insurance_products.txt', 'w') as file:
+            file.truncate()
+        return "Please enter a new website URL."
+    else:
+        result = qa(input)
+        print(result['answer'])
+        return str(result["answer"])
 
 
 if __name__ == '__main__':

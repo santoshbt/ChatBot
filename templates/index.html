@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Source Code</title>
+    <title>Insure Genie</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -16,10 +16,9 @@
   </head>
   <body>
     <div class="container">
-      <h1>Please give the website URL</h1>
-      <br>
+	<br>
+      <h3>Please enter the website URL</h3>
       <hr>
-      <br>
 
         <div class="row">
           <div class="col-lg-9">
@@ -28,7 +27,7 @@
           </div>
           <div class="col-lg-3">
             <!-- <button class="btn btn-primary btn-block" id="submit-button">Send</button> -->
-            <button type="button" class="btn btn-primary" id="submit-button">Send</button>
+            <button type="button" class="btn btn-primary" id="submit-button">Submit</button>
           </div>
         </div>
         <br>
@@ -60,6 +59,9 @@
               data: {
                   question: $("#question").val()
               },
+			  beforeSend: function() {
+				$("#response").html("<p>Please wait...</p>");
+			  },
               success: function(result) {
 				$("#response").html("");
                 $("#response").append("Response: "+result.response);
