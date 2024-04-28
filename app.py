@@ -2,11 +2,12 @@ from langchain.vectorstores import Chroma
 from src.helper import load_embedding
 from dotenv import load_dotenv
 import os
-from src.helper import extract_text, validate_url
+from src.helper import extract_text, validate_url, clear_previous_data
 from flask import Flask, render_template, jsonify, request
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationSummaryMemory
 from langchain.chains import ConversationalRetrievalChain
+from langchain.prompts import PromptTemplate
 
 
 app = Flask(__name__)
@@ -22,10 +23,27 @@ persist_directory = "db"
 vectordb = Chroma(persist_directory=persist_directory,
                   embedding_function=embeddings)
 
+custom_prompt_template = """
+Always answer politely to the customer queries.
+Focus only on the information related to insurance domain.
+Always answer in a step by step manner.
+if any context query is asked, respond as Sorry, I am not aware of it.
+{context}
+
+Question: {question}
+"""
+
+custom_prompt = PromptTemplate(
+    template=custom_prompt_template,
+    input_variables=["context", "question"],
+)
 
 llm = ChatOpenAI()
 memory = ConversationSummaryMemory(llm=llm, memory_key = "chat_history", return_messages=True)
-qa = ConversationalRetrievalChain.from_llm(llm, retriever=vectordb.as_retriever(search_type="mmr", search_kwargs={"k":3}), memory=memory)
+qa = ConversationalRetrievalChain.from_llm(llm,
+                                           retriever=vectordb.as_retriever(search_type="mmr", search_kwargs={"k":3}),
+                                           combine_docs_chain_kwargs={"prompt": custom_prompt},
+                                           memory=memory)
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -48,15 +66,12 @@ def user_input():
 def chat():
     msg = request.form["msg"]
     input = msg
-    print(input)
 
     if input == "clear":
-        with open('insurance_products.txt', 'w') as file:
-            file.truncate()
+        clear_previous_data()
         return "Please enter a new website URL."
     else:
         result = qa(input)
-        print(result['answer'])
         return str(result["answer"])
 
 

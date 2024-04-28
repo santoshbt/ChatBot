@@ -6,7 +6,7 @@ body,html{
 }
 
 .chatbox{
-	margin-left: 11%;
+	margin-left: 17%;
 }
 
 .chat{
@@ -16,7 +16,7 @@ body,html{
 .card{
 	height: 500px;
 	border-radius: 15px !important;
-	background-color: rgba(0,0,0,0.4) !important;
+	background-color: rgb(156 166 162 / 30%)!important;
 }
 .contacts_body{
 	padding:  0.75rem 0 !important;
@@ -103,6 +103,10 @@ border-radius: 0 0 15px 15px !important;
 	border:1.5px solid #f5f6fa;
 
 }
+::placeholder {
+    font-size: 16px;
+	color: rgb(10, 10, 10) !important;
+}
 .img_cont{
 	position: relative;
 	height: 70px;
@@ -131,12 +135,12 @@ border-radius: 0 0 15px 15px !important;
 	margin-left: 15px;
 }
 .user_info span{
-	font-size: 20px;
-	color: white;
+	font-size: 25px;
+	color: #000;
 }
 .user_info p{
-	font-size: 10px;
-	color: rgba(255,255,255,0.6);
+	font-size: 15px;
+	color: #000;
 }
 .video_cam{
 	margin-left: 50px;
@@ -170,14 +174,14 @@ border-radius: 0 0 15px 15px !important;
 	position: absolute;
 	left: 0;
 	bottom: -15px;
-	color: rgba(255,255,255,0.5);
+	color: rgba(10, 10, 10, 0.5);
 	font-size: 10px;
 }
 .msg_time_send{
 	position: absolute;
 	right:0;
 	bottom: -15px;
-	color: rgba(255,255,255,0.5);
+	color: rgba(7, 7, 7, 0.5);
 	font-size: 10px;
 }
 .msg_head{

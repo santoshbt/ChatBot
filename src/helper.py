@@ -70,3 +70,8 @@ def validate_url(input):
         return True
     else:
         return False
+
+def clear_previous_data():
+    file_path = "insurance_products.txt"
+    with open(file_path, 'w') as file:
+        file.truncate()
