@@ -67,9 +67,9 @@ def chat():
     msg = request.form["msg"]
     input = msg
 
-    if input == "clear":
+    if input == "exit":
         clear_previous_data()
-        return "Please enter a new website URL."
+        return "Thanks for contacting, please paste the new web URL if you want to continue"
     else:
         result = qa(input)
         return str(result["answer"])
