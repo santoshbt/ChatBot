@@ -24,7 +24,7 @@ vectordb = Chroma(persist_directory=persist_directory,
                   embedding_function=embeddings)
 
 custom_prompt_template = """
-Always answer politely to the customer queries.
+You are a helpful assistant who answer politely to the customer queries.
 Focus only on the information related to insurance domain.
 Always answer in a step by step manner.
 if any context query is asked, respond as Sorry, I am not aware of it.
