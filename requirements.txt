@@ -1,11 +1,14 @@
-openai==0.28
 tiktoken
-chromadb==0.4.4
-langchain==0.0.249
 flask
 GitPython
 beautifulsoup4
-langchain-community==0.0.19
 langchain-core
 python-dotenv
+langchain
+langchain-community
+langchainhub
+langchain-openai
+langchain-chroma
+bs4
+
 -e .
