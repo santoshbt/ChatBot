@@ -1,10 +1,10 @@
 import os
-from langchain.document_loaders.generic import GenericLoader
-from langchain.document_loaders.parsers import LanguageParser
+from langchain_community.document_loaders.generic import GenericLoader
+from langchain_community.document_loaders.parsers import LanguageParser
 from langchain.text_splitter import Language
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.document_loaders import TextLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.document_loaders import TextLoader
 from bs4 import BeautifulSoup
 import requests
 import re
