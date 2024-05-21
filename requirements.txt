@@ -10,5 +10,6 @@ langchainhub
 langchain-openai
 langchain-chroma
 bs4
+PyPDF2
 
 -e .
