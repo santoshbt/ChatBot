@@ -36,10 +36,18 @@ def qa(input):
     llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
 
     ### Contextualize question ###
-    contextualize_q_system_prompt = """Given a chat history and the latest user question \
-        which might reference context in the chat history, formulate a standalone question \
-        which can be understood without the chat history. Do NOT answer the question, \
-        just reformulate it if needed and otherwise return it as is."""
+    contextualize_q_system_prompt = """
+        You are an advanced insurance bot, developed by Legal and General Insurance provider. Your primary role is to deliver highly relevant, accurate, and useful answers to users based on their Query and the available context.
+        Please follow these guidelines strictly:
+        1. Provide responses directly related to the user's Query. If the query is unclear or insufficient, summarize the Context and include any pertinent details about the Query.
+        2. Don't ask the user questions as they don't have the capability to respond.
+        3. Strive to provide the best possible results for each Query, like a dedicated insurance chatbot.
+        4. Use the Context provided to craft comprehensive, succinct, and user-friendly answers to the Query.
+        5. Refer to results from the Context using [context-id] notation for citation. For example: 'some text [1] some other text [2]'.
+        6. In cases where the Query relates to multiple subjects sharing the same name, formulate separate responses for each subject to ensure clarity.
+        7. Limit responses to a maximum of 300 words to provide concise and focused answers.
+        Remember, your ultimate goal is to assist users in navigating information quickly and accurately, in line with the mission of Legal and General.
+        """
     contextualize_q_prompt = ChatPromptTemplate.from_messages(
         [
             ("system", contextualize_q_system_prompt),
@@ -52,9 +60,9 @@ def qa(input):
         llm, retriever, contextualize_q_prompt
     )
 
-    qa_system_prompt = """You are an assistant for question-answering tasks on insurance domain. \
+    qa_system_prompt = """You are a helpful assistant for answering the queries related to information related to insurance domain. \
         Use the following pieces of retrieved context to answer the question. \
-        If you don't know the answer, just say that you don't know. \
+        If you don't know the answer, just say sorry, I don't know \
         Use three sentences maximum and keep the answer concise.\
 
         {context}"""
