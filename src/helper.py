@@ -1,23 +1,33 @@
+import io
 import os
-from langchain.document_loaders.generic import GenericLoader
-from langchain.document_loaders.parsers import LanguageParser
+from langchain_community.document_loaders.generic import GenericLoader
+from langchain_community.document_loaders.parsers import LanguageParser
 from langchain.text_splitter import Language
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.document_loaders import TextLoader
+from langchain_openai import OpenAIEmbeddings
+from langchain_community.document_loaders import TextLoader
 from bs4 import BeautifulSoup
 import requests
 import re
+import PyPDF2
 # import pdb
 
 def extract_text(url):
+    _, file_ext = os.path.splitext(url)
     try:
-        res = requests.get(url)
-        soup = BeautifulSoup(res.text, "html.parser")
-        text = soup.get_text()
-        lines = text.split('\n')
-        non_empty_lines = [line for line in lines if line.strip()]
-        cleaned_text = '\n'.join(non_empty_lines)
+        if file_ext.lower() == '.pdf':
+            res = requests.get(url)
+            f = io.BytesIO(res.content)
+            reader = PyPDF2.PdfReader(f)
+            pages = reader.pages
+            cleaned_text = "".join([page.extract_text() for page in pages])
+        else:
+            res = requests.get(url, headers={'Accept-Encoding': 'identity'})
+            soup = BeautifulSoup(res.text, "html.parser")
+            text = soup.get_text()
+            lines = text.split('\n')
+            non_empty_lines = [line for line in lines if line.strip()]
+            cleaned_text = "\n".join(non_empty_lines)
         write_to_local_file(cleaned_text)
     except requests.exceptions.RequestException as e:
         print(f"Error occurred while fetching the URL: {e}")
